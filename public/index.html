@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CraftHub — Minecraft Community</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<div id="toast"></div>
+<header class="topbar">
+  <div class="brand" onclick="show('home')"><span class="cube">⛏</span><span>Craft<span>Hub</span></span></div>
+  <nav>
+    <button onclick="show('home')">الرئيسية</button><button onclick="show('servers')">السيرفرات</button><button onclick="show('mods')">التعديلات</button><button onclick="show('voice')">🎙 الصوت</button>
+  </nav>
+  <div id="authArea"><button class="primary" onclick="openAuth()">تسجيل الدخول</button></div>
+</header>
+<main>
+<section id="home" class="page active">
+  <div class="hero">
+    <div><div class="eyebrow">MINECRAFT COMMUNITY</div><h1>كل عالم Minecraft<br><b>في مكان واحد.</b></h1>
+    <p>اكتشف السيرفرات، Mods وPlugins، قيّم تجربتك وتكلم مع اللاعبين في غرف صوتية.</p>
+    <div class="actions"><button class="primary big" onclick="show('servers')">اكتشف السيرفرات</button><button class="ghost big" onclick="show('voice')">ادخل الـVoice 🎙</button></div></div>
+    <div class="hero-art"><div class="pixel-sun"></div><div class="mountain"></div><div class="grass"></div><div class="steve">🧑‍🌾</div></div>
+  </div>
+  <div class="stats"><div><strong id="serverCount">0</strong><span>سيرفر</span></div><div><strong id="modCount">0</strong><span>تعديل</span></div><div><strong>24/7</strong><span>مجتمع</span></div><div><strong>🎙</strong><span>Voice Rooms</span></div></div>
+  <h2>🔥 سيرفرات مميزة</h2><div id="featured" class="grid"></div>
+</section>
+
+<section id="servers" class="page">
+  <div class="section-head"><div><div class="eyebrow">SERVER LIST</div><h1>سيرفرات Minecraft</h1></div><button class="primary adminOnly" onclick="adminAddServer()">+ إضافة سيرفر</button></div>
+  <div class="filters"><input id="serverSearch" placeholder="🔎 ابحث عن سيرفر..." oninput="loadServers()"><select id="serverType" onchange="loadServers()"><option value="all">كل الأنواع</option><option>SMP</option><option>Survival</option><option>LifeSteal</option><option>BedWars</option><option>SkyBlock</option></select></div>
+  <div id="serverGrid" class="grid"></div>
+</section>
+
+<section id="mods" class="page">
+  <div class="section-head"><div><div class="eyebrow">MODS & PLUGINS</div><h1>التعديلات والإضافات</h1></div><button class="primary adminOnly" onclick="adminAddMod()">+ إضافة تعديل</button></div>
+  <div class="filters"><input id="modSearch" placeholder="🔎 ابحث عن Mod أو Plugin..." oninput="loadMods()"><select id="modType" onchange="loadMods()"><option value="all">الكل</option><option>Mod</option><option>Plugin</option></select></div>
+  <div id="modGrid" class="grid"></div>
+</section>
+
+<section id="voice" class="page">
+  <div class="section-head"><div><div class="eyebrow">VOICE LOUNGE</div><h1>غرف الصوت</h1></div></div>
+  <div class="voice-layout">
+    <div class="room-list"><h3>الغرف</h3><button class="room active" onclick="joinRoom('Lobby',this)">🌐 Lobby <span id="count-Lobby">0</span></button><button class="room" onclick="joinRoom('Survival',this)">🌲 Survival <span id="count-Survival">0</span></button><button class="room" onclick="joinRoom('BedWars',this)">🛏 BedWars <span id="count-BedWars">0</span></button><button class="room" onclick="joinRoom('LifeSteal',this)">❤️ LifeSteal <span id="count-LifeSteal">0</span></button></div>
+    <div class="voice-main"><div class="voice-head"><div><h2 id="roomName">Lobby</h2><span id="voiceStatus">جاهز</span></div><div><button id="muteBtn" class="ghost" onclick="toggleMute()">🎙 كتم الميكروفون</button></div></div><div id="members" class="members"></div><div class="voice-tip">السماح بالميكروفون مطلوب. الصوت يعمل بين مستخدمي الغرفة عبر WebRTC.</div></div>
+  </div>
+</section>
+
+<section id="profile" class="page"><div class="profile-card"><div class="avatar">🧑</div><h1 id="profileName">User</h1><p id="profileRole"></p><div id="favorites"></div></div></section>
+<section id="admin" class="page"><div class="section-head"><h1>لوحة الإدارة</h1></div><div id="reports"></div></section>
+</main>
+
+<div id="modal" class="modal hidden"><div class="modal-card"><button class="close" onclick="closeModal()">×</button><div id="modalBody"></div></div></div>
+<script src="/socket.io/socket.io.js"></script><script src="/app.js"></script>
+</body></html>
